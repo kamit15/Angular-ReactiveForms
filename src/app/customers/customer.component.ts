@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+// import { FormGroup, FormControl} from "@angular/forms";
+import { FormGroup, FormBuilder } from "@angular/forms";
 import { Customer } from "./customer";
 
 @Component({
@@ -11,13 +12,26 @@ export class CustomerComponent implements OnInit {
   customerForm: FormGroup;
   customer: Customer = new Customer();
 
+  constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
-    this.customerForm = new FormGroup({
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      email: new FormControl(),
-      sendCatalog: new FormControl(true)
+    // this.customerForm = this.fb.group({
+    //   firstName: "",
+    //   lastName: { value: "n/a", disabled: true },
+    //   email: "",
+    //   sendCatalog: true
+    // });
+    this.customerForm = this.fb.group({
+      firstName: "",
+      lastName: "",
+      email: "",
+      sendCatalog: true
     });
+    // this.customerForm = new FormGroup({
+    //   firstName: new FormControl(),
+    //   lastName: new FormControl(),
+    //   email: new FormControl(),
+    //   sendCatalog: new FormControl(true)
+    // });
   }
 
   save() {
