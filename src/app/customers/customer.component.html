@@ -3,20 +3,20 @@
     Sign Up!
   </div>
   <div class="card-body">
-    <form novalidate autocomplete="off" #signupForm="ngForm"
-		 (ngSubmit)="save(signupForm)">
+    <form novalidate autocomplete="off" [formGroup]="customerForm"
+		 (ngSubmit)="save()">
       <div class="row form-group">
         <label class="col-md-2 col-form-label" for="firstNameId">First Name</label>
         <div class="col-md-8">
           <input type="text" class="form-control" id="firstNameId" placeholder="First Name (required)"
-					required minlength="3" name="firstName" [(ngModel)]="customer.firstName"
-					#firstNameVar="ngModel"
-					[ngClass]="{'is-invalid':(firstNameVar.touched || firstNameVar.dirty) && !firstNameVar.valid}"> 
+					required minlength="3" 
+					formControlName="firstName"
+					[ngClass]="{'is-invalid':(customerForm.get('firstName').touched || customerForm.get('firstName').dirty) && !customerForm.get('firstName').valid}"> 
 					<span class="invalid-feedback">
-						<span *ngIf="firstNameVar.errors?.required">
+						<span *ngIf="customerForm.get('firstName').errors?.required">
 							Please enter your first name.
 						</span>
-						<span *ngIf="firstNameVar.errors?.minlength">
+						<span *ngIf="customerForm.get('firstName').errors?.minlength">
 							 The first name must be longer than 3 characters.
 						</span>
 					</span>
@@ -26,11 +26,12 @@
 		  <label class="col-md-2 col-form-label" for="lastNameId">Last Name</label>
 	      <div class="col-md-8">
 	        <input type="text" class="form-control" placeholder="Last Name (required)"
-					required maxlength="50" name="lastName" [(ngModel)]="customer.lastname"
-					id="lastNameId" #lastNameVar="ngModel"
-					[ngClass]="{'is-invalid':(lastNameVar.touched || lastNameVar.dirty) && !lastNameVar.valid}"> 
+					required maxlength="50" 
+					formControlName="lastName"
+					id="lastNameId" 
+					[ngClass]="{'is-invalid':(customerForm.get('lastName').touched || customerForm.get('lastName').dirty) && !customerForm.get('lastName').valid}"> 
 					<span class="invalid-feedback">
-						<span *ngIf="lastNameVar.errors?.required">
+						<span *ngIf="customerForm.get('lastName').errors?.required">
 							Please enter your last name.
 						</span>
 					</span>
@@ -40,14 +41,14 @@
 		  <label class="col-md-2 col-form-label" for="emailId">Email</label>
 		    <div class="col-md-8">
 		      <input type="text" id="emailId" class="form-control" placeholder="Email (required)"
-					required email name="email" [(ngModel)]="customer.emails"
-					#emailVar="ngModel"
-					 [ngClass]="{'is-invalid':(emailVar.touched || emailVar.dirty) && !emailVar.valid}"> 
+					required email 
+					formControlName="email"
+					 [ngClass]="{'is-invalid':(customerForm.get('email').touched || customerForm.get('email').dirty) && !customerForm.get('email').valid}"> 
 		    	<span class="invalid-feedback">
-						 <span *ngIf="emailVar.errors?.required">
+						 <span *ngIf="customerForm.get('email').errors?.required">
 						  Please enter your email address.
 						 </span>
-						<span *ngIf="emailVar.errors?.email">
+						<span *ngIf="customerForm.get('email').errors?.email">
 							Please enter a valid email address.
 						</span>
 					</span>
@@ -56,12 +57,13 @@
 	  <div class="row form-group">
       <div class="col-md-8">
         <div class="form-check">
-	        <input class="form-check-input" type="checkbox" id="sendCatalogId" name="sendCatalog" [(ngModel)]="customer.sendCatalog">
+	        <input class="form-check-input" type="checkbox" id="sendCatalogId" 
+					formControlName="sendCatalog">
 		      <label class="form-check-label" for="sendCatalogId">Send me your Catalog</label>
         </div>
       </div>
 	  </div>
-    
+    <!--
 		<div *ngIf="customer.sendCatalog">
 	  <div class="row">
 		  <label class="col-md-2 col-form-label pt-0">Address Type</label>
@@ -126,11 +128,21 @@
 				 [(ngModel)]="customer.zip" name="zip"> 
 			</div>
 	  </div>
-</div>
+</div>-->
 		<div class="form-group row">
 			<div class="col-md-4">
 				<span>
-					<button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Save</button>
+					<button type="submit" class="btn btn-primary" [disabled]="!customerForm.valid">Save</button>
+				</span>
+				<span>
+					<button type="submit" class="btn btn-default" (click)="populateTestDataUsingSet()">
+						Test Data(Set)
+					</button>
+				</span>
+				<span>
+					<button type="submit" class="btn btn-default" (click)="populateTestDataUsingPatch()">
+						Test Data(Patch)
+					</button>
 				</span>
 			</div>
 		</div>
@@ -139,9 +151,9 @@
 </div>
 
 <br/>
-Dirty: {{signupForm.dirty}}<br/>
-Touched:{{signupForm.touched}}<br/>
-Valid:{{signupForm.valid}}<br/>
-Value:{{signupForm.value | json}}<br/>
+Dirty: {{customerForm.dirty}}<br/>
+Touched:{{customerForm.touched}}<br/>
+Valid:{{customerForm.valid}}<br/>
+Value:{{customerForm.value | json}}<br/>
 
 			
