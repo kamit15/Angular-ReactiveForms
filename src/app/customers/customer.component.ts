@@ -23,7 +23,12 @@ export class CustomerComponent implements OnInit {
     this.customerForm = this.fb.group({
       firstName: ["", [Validators.required, Validators.minLength(3)]],
       lastName: ["", [Validators.required, Validators.maxLength(50)]],
-      email: ["", [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]],
+      email: [
+        "",
+        [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+")]
+      ],
+      phone: "",
+      notification: "email",
       sendCatalog: true
     });
     // this.customerForm = new FormGroup({
@@ -52,5 +57,19 @@ export class CustomerComponent implements OnInit {
       firstName: "xyz",
       email: "xyz@def.com"
     });
+  }
+
+  setNotification(notifyVia: string): void {
+    const phoneControl = this.customerForm.get("phone");
+    console.log(notifyVia);
+    if (notifyVia === "text") {
+      phoneControl.setValidators([
+        Validators.required,
+        Validators.minLength(3)
+      ]);
+    } else {
+      phoneControl.clearValidators();
+    }
+    phoneControl.updateValueAndValidity();
   }
 }
