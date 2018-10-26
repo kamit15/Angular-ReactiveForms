@@ -8,8 +8,7 @@
       <div class="row form-group">
         <label class="col-md-2 col-form-label" for="firstNameId">First Name</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" id="firstNameId" placeholder="First Name (required)"
-					required minlength="3" 
+          <input type="text" class="form-control" id="firstNameId" placeholder="First Name (required)" 
 					formControlName="firstName"
 					[ngClass]="{'is-invalid':(customerForm.get('firstName').touched || customerForm.get('firstName').dirty) && !customerForm.get('firstName').valid}"> 
 					<span class="invalid-feedback">
@@ -26,7 +25,6 @@
 		  <label class="col-md-2 col-form-label" for="lastNameId">Last Name</label>
 	      <div class="col-md-8">
 	        <input type="text" class="form-control" placeholder="Last Name (required)"
-					required maxlength="50" 
 					formControlName="lastName"
 					id="lastNameId" 
 					[ngClass]="{'is-invalid':(customerForm.get('lastName').touched || customerForm.get('lastName').dirty) && !customerForm.get('lastName').valid}"> 
@@ -41,7 +39,6 @@
 		  <label class="col-md-2 col-form-label" for="emailId">Email</label>
 		    <div class="col-md-8">
 		      <input type="text" id="emailId" class="form-control" placeholder="Email (required)"
-					required email 
 					formControlName="email"
 					 [ngClass]="{'is-invalid':(customerForm.get('email').touched || customerForm.get('email').dirty) && !customerForm.get('email').valid}"> 
 		    	<span class="invalid-feedback">
