@@ -85,6 +85,11 @@ export class CustomerComponent implements OnInit {
     //   email: new FormControl(),
     //   sendCatalog: new FormControl(true)
     // });
+
+    //After Definition of root FormGroup otherwise customerForm reference is null
+    this.customerForm
+      .get("notification")
+      .valueChanges.subscribe(value => console.log(value));
   }
 
   save() {
