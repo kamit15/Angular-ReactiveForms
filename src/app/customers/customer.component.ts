@@ -9,6 +9,19 @@ import {
 } from "@angular/forms";
 import { Customer } from "./customer";
 
+function emailMatcher(c: AbstractControl): { [key: string]: boolean } | null {
+  const emailControl = c.get("email");
+  const confirmControl = c.get("confirmEmail");
+
+  if (emailControl.pristine || confirmControl.pristine) {
+    return null;
+  }
+  if (emailControl.value === confirmControl.value) {
+    return null;
+  }
+  return { match: true };
+}
+
 function ratingRange(c: AbstractControl): { [key: string]: boolean } | null {
   if (c.value != undefined && (isNaN(c.value) || c.value < 1 || c.value > 5)) {
     return { range: true };
@@ -47,16 +60,19 @@ export class CustomerComponent implements OnInit {
     this.customerForm = this.fb.group({
       firstName: ["", [Validators.required, Validators.minLength(3)]],
       lastName: ["", [Validators.required, Validators.maxLength(50)]],
-      emailGroup: this.fb.group({
-        email: [
-          "",
-          [
-            Validators.required,
-            Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+")
-          ]
-        ],
-        confirmEmail: ["", Validators.required]
-      }),
+      emailGroup: this.fb.group(
+        {
+          email: [
+            "",
+            [
+              Validators.required,
+              Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+")
+            ]
+          ],
+          confirmEmail: ["", Validators.required]
+        },
+        { validator: emailMatcher }
+      ),
       phone: "",
       notification: "email",
       //rating: ["", ratingRange],
