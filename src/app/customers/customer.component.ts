@@ -87,9 +87,11 @@ export class CustomerComponent implements OnInit {
     // });
 
     //After Definition of root FormGroup otherwise customerForm reference is null
+    //No longer rely on html click event
     this.customerForm
       .get("notification")
-      .valueChanges.subscribe(value => console.log(value));
+      .valueChanges.subscribe(value => this.setNotification(value));
+    //console.log(value));
   }
 
   save() {
