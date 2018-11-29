@@ -9,6 +9,8 @@ import {
 } from "@angular/forms";
 import { Customer } from "./customer";
 
+import { debounceTime } from "rxjs/operators";
+
 function emailMatcher(c: AbstractControl): { [key: string]: boolean } | null {
   const emailControl = c.get("email");
   const confirmControl = c.get("confirmEmail");
@@ -103,7 +105,9 @@ export class CustomerComponent implements OnInit {
     //console.log(value));
 
     const emailControl = this.customerForm.get("emailGroup.email");
-    emailControl.valueChanges.subscribe(value => this.setMessage(emailControl));
+    emailControl.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(value => this.setMessage(emailControl));
   }
 
   save() {
