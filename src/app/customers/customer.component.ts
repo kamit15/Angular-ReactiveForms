@@ -49,6 +49,15 @@ export class CustomerComponent implements OnInit {
   customerForm: FormGroup;
   customer: Customer = new Customer();
 
+  //property that contain the validation message to display
+  emailMessage: string;
+
+  private validationMessages = {
+    required: "Please enter your email address.",
+    //email: "Please enter a valid email address."
+    pattern: "Please enter a valid email address."
+  };
+
   constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
     // this.customerForm = this.fb.group({
@@ -92,6 +101,9 @@ export class CustomerComponent implements OnInit {
       .get("notification")
       .valueChanges.subscribe(value => this.setNotification(value));
     //console.log(value));
+
+    const emailControl = this.customerForm.get("emailGroup.email");
+    emailControl.valueChanges.subscribe(value => this.setMessage(emailControl));
   }
 
   save() {
@@ -112,6 +124,16 @@ export class CustomerComponent implements OnInit {
       firstName: "xyz",
       email: "xyz@def.com"
     });
+  }
+
+  setMessage(c: AbstractControl): void {
+    this.emailMessage = "";
+    console.log(this.validationMessages);
+    if ((c.touched || c.dirty) && c.errors) {
+      this.emailMessage = Object.keys(c.errors)
+        .map(key => (this.emailMessage += this.validationMessages[key]))
+        .join(" ");
+    }
   }
 
   setNotification(notifyVia: string): void {
