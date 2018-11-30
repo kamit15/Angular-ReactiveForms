@@ -88,7 +88,13 @@ export class CustomerComponent implements OnInit {
       notification: "email",
       //rating: ["", ratingRange],
       rating: ["", ratingRangeParam(1, 5)],
-      sendCatalog: true
+      sendCatalog: true,
+      address:'home',
+      street1:'',
+      street2:'',
+      city:'',
+      state:'',
+      zip:''
     });
     // this.customerForm = new FormGroup({
     //   firstName: new FormControl(),
