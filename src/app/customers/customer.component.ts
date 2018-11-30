@@ -5,7 +5,8 @@ import {
   FormBuilder,
   Validators,
   AbstractControl,
-  ValidatorFn
+  ValidatorFn,
+  FormArray
 } from "@angular/forms";
 import { Customer } from "./customer";
 
@@ -54,6 +55,10 @@ export class CustomerComponent implements OnInit {
   //property that contain the validation message to display
   emailMessage: string;
 
+  get addresses(): FormArray{
+    return <FormArray>this.customerForm.get('addresses');
+  }
+
   private validationMessages = {
     required: "Please enter your email address.",
     //email: "Please enter a valid email address."
@@ -89,7 +94,7 @@ export class CustomerComponent implements OnInit {
       //rating: ["", ratingRange],
       rating: ["", ratingRangeParam(1, 5)],
       sendCatalog: true,
-      addresses: this.buildAddress()
+      addresses: this.fb.array([this.buildAddress()])
     });
     // this.customerForm = new FormGroup({
     //   firstName: new FormControl(),
@@ -111,15 +116,15 @@ export class CustomerComponent implements OnInit {
       .subscribe(value => this.setMessage(emailControl));
   }
 
-  buildAddress(): FormGroup{
+  buildAddress(): FormGroup {
     return this.fb.group({
-        address: "home",
-        street1: "",
-        street2: "",
-        city: "",
-        state: "",
-        zip: ""
-      });
+      address: "home",
+      street1: "",
+      street2: "",
+      city: "",
+      state: "",
+      zip: ""
+    });
   }
 
   save() {
