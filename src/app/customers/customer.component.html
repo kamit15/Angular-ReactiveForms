@@ -146,6 +146,7 @@
 
 
 		<div *ngIf="customerForm.get('sendCatalog').value">
+			<div formGroupName="addresses">
 	  <div class="row">
 		  <label class="col-md-2 col-form-label pt-0">Address Type</label>
 		    <div class="col-md-8">
@@ -209,6 +210,7 @@
 				 formControlName="zip"> 
 			</div>
 	  </div>
+		</div>
 </div>
 
 
