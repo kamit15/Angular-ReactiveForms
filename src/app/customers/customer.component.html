@@ -180,22 +180,22 @@
 		    </div>
 		</div>
 	  <div class="row form-group">
-		  <label class="col-md-2 col-form-label" for="street2Id">Street Address 2</label>
+		  <label class="col-md-2 col-form-label" attr.for="{{'street2Id' + i}}">Street Address 2</label>
 		  <div class="col-md-8">
-		    <input type="text" class="form-control" id="street2Id" placeholder="Street address (second line)"
+		    <input type="text" class="form-control" id="{{'street2Id' + i}}" placeholder="Street address (second line)"
 				 formControlName="street2"> 
 		  </div>
 		</div>
 	  <div class="row form-group">
-		  <label class="col-md-2 col-form-label" for="cityId">City, State, ZipCode</label>
+		  <label class="col-md-2 col-form-label" attr.for="{{'cityId' + i }}">City, State, ZipCode</label>
 		  <div class="col-md-3">
 		    <input type="text" class="form-control" placeholder="City"
-				 id="cityId"
+				 id="{{'cityId' + i }}"
 				 formControlName="city"> 
 		  </div>
 	    <div class="col-md-3">
 			  <select class="form-control"
-				 id="stateId" formControlName="state">
+				 id="{{'stateId' + i }}" formControlName="state">
           <option value="" 
 					 disabled selected>Select a state...</option>
 					<option value="AL">Alabama</option>
@@ -209,11 +209,19 @@
         </select>
 			</div>
 			<div class="col-md-2">
-				<input type="text" id="zipId" class="form-control" placeholder="Zip code"
+				<input type="text" id="{{'zipId' + i}" class="form-control" placeholder="Zip code"
 				 formControlName="zip"> 
 			</div>
 	  </div>
 		</div>
+		</div>
+
+		<div class="form-group row mb-2">
+			<div class="col-md-4">
+				<button class="btn btn-outline-primary" type="button" [disabled]="!addresses.valid" (click)="addAddress()">
+					Add Another Address
+				</button>
+			</div>
 		</div>
 </div>
 
@@ -245,5 +253,6 @@ Dirty: {{customerForm.dirty}}<br/>
 Touched:{{customerForm.touched}}<br/>
 Valid:{{customerForm.valid}}<br/>
 Value:{{customerForm.value | json}}<br/>
+Street: {{addresses.get('0.street1')?.value}}
 
 			
